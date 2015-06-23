@@ -1,0 +1,33 @@
+{% if billing_address.name %}
+<p>Αγαπητέ/ή {{ billing_address.name }},</p>
+<p></p>
+{% endif %}
+<p>{% if fulfillment.item_count == item_count %}Όλα τα{% elsif fulfillment_status == 'fulfilled' %}Τα τελευταία{% else %}Κάποια από τα{% endif %} προϊόντα της παραγγελίας {{ name }} έχουν αποσταλεί:</p>
+<p>{% for line in fulfillment.fulfillment_line_items %}<img src="{{ line.line_item | img_url: 'small' }}" />{{ line.quantity }}x {{ line.line_item.title }}<br>
+{% endfor %}</p>
+<p>{% if requires_shipping %}Μεταφέρονται {% if fulfillment.tracking_company %}μέσω {{ fulfillment.tracking_company }} {% endif %}στην εξής διεύθυνση: </p>
+
+<p>{{ shipping_address.name }}<br />
+{{ shipping_address.street }}<br />
+{{ shipping_address.city }}<br />
+{{ shipping_address.province }}
+{{ shipping_address.zip }}<br />
+{{ shipping_address.country }}</p>
+
+{% if fulfillment.tracking_numbers.size > 0 %}
+{% if fulfillment.tracking_numbers.size == 1 %}
+<p>Ο αριθμός μεταφοράς για τα προϊόντα είναι {{ fulfillment.tracking_numbers.first }}. <a href="{{ fulfillment.tracking_urls.first }}">Κάντε κλικ εδώ για να δείτε πού βρίσκονται τα προϊόντα σας.</a></p>
+{% else %}
+<p>Τα στοιχεία μεταφοράς των προϊόντων σας είναι:</p>
+<p>{% for tracking_number in fulfillment.tracking_numbers %} {{ tracking_number }}<br>{% endfor %}</p>
+
+<p>Κάντε κλικ παρακάτω για να δείτε που βρίσκονται τα προϊόντα σας:</p>
+<p>{% for tracking_url in fulfillment.tracking_urls %} <a href="{{ tracking_url }}">{{ tracking_url }}</a><br>{% endfor %}</p>
+{% endif %}
+
+<p>Να σημειωθεί ότι μπορεί να περάσει ένα μικρό χρονικό διάστημα για να ενημερωθεί η κατάσταση της μεταφοράς.</p>
+{% endif %}{% endif %}{% if fulfillment_status != 'fulfilled' %}
+<p>Θα λάβετε email επιβεβαίωσης όταν σταλούν περισσότερα προϊόντα από τη παραγγελία σας.</p>
+{% endif %}
+
+<p>Σας ευχαριστούμε για την παραγγελία σας στο κατάστημα {{ shop_name }}!</p>

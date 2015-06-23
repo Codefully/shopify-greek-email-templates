@@ -1,0 +1,11 @@
+{% if billing_address.name %}Αγαπητέ/ή {{ billing_address.name }},{% endif %}
+
+Τα παρακάτω προϊόντα απο την παραγγελία {{ name }} έχουν ενημερωθεί με νέα στοιχεία αποστολής:
+{% for line in fulfillment.fulfillment_line_items %}
+  {{ line.quantity }}x {{ line.line_item.title }}
+{% endfor %}
+Μεταφέρονται{% if fulfillment.tracking_company %} μέσω {{ fulfillment.tracking_company }}{% endif %} με αριθμό μεταφοράς {{ fulfillment.tracking_number }}. Κάνοντας κλικ στον παρακάτω σύνδεσμο μπορείτε να δείτε την κατάσταση μεταφοράς:
+
+{{ fulfillment.tracking_url }}
+
+Να σημειωθεί ότι μπορεί να περάσει ένα μικρό χρονικό διάστημα για να ενημερωθεί η κατάσταση της μεταφοράς.

@@ -1,0 +1,15 @@
+Γεια σου{% if billing_address.name %} {{ billing_address.name }}{% endif %},
+
+Έχουμε κρατήσει το καλάθι σου στο {{ shop_name }}και σε περιμένει!
+
+Στο καλάθι έχεις αφήσει:
+
+{% for line in line_items %}{{ line.quantity }}x {{ line.title }}{% endfor %}
+
+Για να ολοκληρώσεις τις αγορές σου ακολούθησε τον παρακάτω σύνδεσμο:
+
+{{ url }}
+
+Ευχαριστούμε για την προτίμηση!
+
+{{ shop_name }}

@@ -1,0 +1,14 @@
+{% if billing_address.name %}
+<p>Αγαπητέ/ή {{ billing_address.name }}, </p>
+<p></p>
+{% endif %}
+
+<p>Η παραγγελία σας {{ name }} έχει ακυρωθεί {% case cancel_reason %}{% when 'customer' %}μετά από δικό σας αίτημα.{% when 'inventory' %}γιατί δεν υπάρχουν αρκετά αποθέματα για να εκτελέσουμε την παραγγελία σας.{% when 'fraud' %}γιατί θεωρούμε ότι είναι ύποπτη για απάτη.{% when 'other' %}για απρόβλεπτους λόγους.{% endcase %}</p>
+
+<p></p>
+<p>{% if financial_status == 'voided' %}Η πληρωμή σας έχει ακυρωθεί{% elsif financial_status == 'credited' %}Η πληρωμή σας έχει επιστραφεί.{% endif %}</p>
+
+<p>Απαντήστε σε αυτό το email εάν έχετε οποιεσδήποτε ερωτήσεις ή ανησυχίες.</p>
+
+<p>Με εκτίμηση,</p>
+<p> {{shop_name}}</p>

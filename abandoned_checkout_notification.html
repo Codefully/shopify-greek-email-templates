@@ -1,0 +1,15 @@
+<p>Γεια σου{% if billing_address.name %} {{ billing_address.name }}{% endif %},</p>
+<p></p>
+<p>Έχουμε κρατήσει το καλάθι σου στο {{ shop_name }}και σε περιμένει!</p>
+<p></p>
+<p>Στο καλάθι έχεις αφήσει:</p>
+<p></p>
+<p>{% for line in line_items %}{{ line.quantity }}x {{ line.title }}{% endfor %}</p>
+<p></p>
+<p>Για να ολοκληρώσεις τις αγορές σου ακολούθησε τον παρακάτω σύνδεσμο:</p>
+<p></p>
+<p>{{ url }}</p>
+<p></p>
+<p>Ευχαριστούμε για την προτίμηση!</p>
+<p></p>
+<p>{{ shop_name }}</p>
