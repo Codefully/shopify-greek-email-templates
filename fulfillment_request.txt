@@ -28,7 +28,7 @@
 Τρόπος Αποστολής:
 {% if shipping_method %}{{ shipping_method.title }}{% else %}Κανένας{% endif %}
 
-Tracking Number:
+Αριθμός μεταφοράς:
 {% if fulfillment.tracking_number %}{{ fulfillment.tracking_number }}{% else %}Κανένας{% endif %}
 
 Email πελάτη:

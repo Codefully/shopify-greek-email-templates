@@ -1,11 +1,12 @@
   Γεια σου{% if gift_card.customer %} {{ gift_card.customer.first_name }}{% endif %},
 
-  Εδώ θα βρεις μια δωροεπιταγή για σένα με {{ gift_card.initial_value | money_without_trailing_zeros }} για να ψωνίσεις από το <a href="{{ shop.url }}">{{ shop.name }}</a>.
+  Εδώ θα βρεις μια δωροεπιταγή για σένα με {{ gift_card.initial_value | money_without_trailing_zeros }} για να ψωνίσεις από το {{ shop.name }}.
 
   {% if gift_card.initial_value != gift_card.balance %}
   Έχεις ακόμα {{ gift_card.balance | money_without_trailing_zeros }} στη δωροεπιταγή σου.
   {% endif %}
 
+  Για να δείς ή να εκτυπώσεις την κάρτα, επισκέψου τον παρακάτω σύνδεσμο:
   <{{ gift_card.url }}>
 
   Αγόρασες τη δωροεπιταγή για κάποιον άλλο; Προώθησέ του αυτό το email.
