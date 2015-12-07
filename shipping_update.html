@@ -1,16 +1,96 @@
-{% if billing_address.name %}
-<p>Αγαπητέ/ή {{ billing_address.name }},</p>
-{% endif %}
+<!-- Inliner Build Version 4380b7741bb759d6cb997545f3add21ad48f010b -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;">
+<!-------------------------------
 
-<p>Τα παρακάτω προϊόντα απο την παραγγελία {{ name }} έχουν ενημερωθεί με νέα στοιχεία αποστολής:</p>
+NOTES:
 
-<ul style="list-style-type:none">
-  {% for line in fulfillment.fulfillment_line_items %}<li>
-    <img src="{{ line.line_item | img_url: 'small' }}" />
-    {{ line.quantity }}x {{ line.line_item.title }}
-  </li>{% endfor %}
-</ul>
+When you are ready to add this to your Shopify site. You should use http://zurb.com/ink/inliner.php to "inline" your code, so it works in email apps.
 
-<p>Μεταφέρονται{% if fulfillment.tracking_company %} μέσω {{ fulfillment.tracking_company }}{% endif %} με αριθμό μεταφοράς {{ fulfillment.tracking_number }}. <a href="{{ fulfillment.tracking_url }}">Κάντε κλικ εδώ για να δείτε την κατάσταση της μεταφοράς</a>.</p>
+-------------------------------->
+  <head>
+    <meta name="viewport" content="width=device-width" />
+<!-- IMPORTANT -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Ενημέρωση μεταφοράς</title>
+<!-- <link rel="stylesheet" type="text/css" href="stylesheets/email.css" /> -->
+  </head>
+  <body bgcolor="#FFFFFF" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: none; width: 100% !important; height: 100%; margin: 0; padding: 0;"><style type="text/css">
+@media only screen and (max-width: 600px) {
+  a[class="btn"] {
+    display: block !important; margin-bottom: 10px !important; background-image: none !important; margin-right: 0 !important;
+  }
+  div[class="column"] {
+    width: auto !important; float: none !important;
+  }
+  table.social div[class="column"] {
+    width: auto !important;
+  }
+}
+</style>
 
-<p>Να σημειωθεί ότι μπορεί να περάσει ένα μικρό χρονικό διάστημα για να ενημερωθεί η κατάσταση της μεταφοράς.</p>
+<!-- HEADER -->
+<table class="head-wrap" bgcolor="#b5181e" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; width: 100%; margin: 0; padding: 0;"><tr style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;"><td style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;"></td>
+		<td class="header container" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; display: block !important; max-width: 600px !important; clear: both !important; margin: 0 auto; padding: 0;">
+
+				<div class="content" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; max-width: 600px; display: block; margin: 0 auto; padding: 15px;">
+					<table bgcolor="#b5181e" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; width: 100%; margin: 0; padding: 0;"><tr style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;"><td style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;">
+								<a href="{{ shop.url }}" title="{{ shop_name }}" alt="{{ shop_name }}" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; color: #2BA6CB; margin: 0; padding: 0;"></a><img src="{{ 'logo-new.svg' | asset_url }}" style="width: 70px; height: auto; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; max-width: 100%; margin: 0; padding: 0;" /></td>
+							<td align="right" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;">
+								<h6 class="collapse" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; line-height: 1.1; color: #444; font-weight: 900; font-size: 14px; margin: 0; padding: 0;">Ενημέρωση μεταφοράς</h6>
+							</td>
+						</tr></table></div>
+
+		</td>
+		<td style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;"></td>
+	</tr></table><!-- /HEADER --><!-- BODY --><table class="body-wrap" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; width: 100%; margin: 0; padding: 0;"><tr style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;"><td style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;"></td>
+		<td class="container" bgcolor="#FFFFFF" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; display: block !important; max-width: 600px !important; clear: both !important; margin: 0 auto; padding: 0;">
+
+			<div class="content" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; max-width: 600px; display: block; margin: 0 auto; padding: 15px;">
+			<table style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; width: 100%; margin: 0; padding: 0;"><tr style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;"><td style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;">
+						<br style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;" /><h3 style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; line-height: 1.1; color: #000; font-weight: 500; font-size: 27px; margin: 0 0 15px; padding: 0;">Hi{% if billing_address.name %}, {{ billing_address.name }}{% endif %}</h3>
+
+						<br style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;" /><h5 style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; line-height: 1.1; color: #000; font-weight: 900; font-size: 17px; margin: 0 0 15px; padding: 0;">Τα παρακάτω προϊόντα που σας έχουν αποσταλεί για την παραγγελία {{ name }} έχουν ενημερωθεί:</h5>
+
+						<!-- Line Items -->
+						{% for line in fulfillment.fulfillment_line_items %}
+						<div class="products" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; width: 100%; height: 40px; margin: 10px 0; padding: 0;">
+							<img src="{{ line.line_item.product.featured_image | product_img_url: 'small' }}" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; max-width: 100%; float: left; height: 40px; width: auto; margin: 0 20px 0 0; padding: 0;" align="left" /><span style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 17px; margin: 0; padding: 0;"> {{ line.quantity }}x {{ line.line_item.title }}</span>
+						</div>
+						<hr style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; height: 0; border-top-style: dotted; border-top-color: rgba(0, 0, 0, 0.1); border-bottom-style: dotted; border-bottom-color: rgba(255, 255, 255, 0.3); margin: 0; padding: 0; border-width: 1px 0;" /><div style="clear: both; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;"></div>
+						{% endfor %}
+						<!-- /Line Items -->
+
+						<br style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;" /><p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; margin: 0 0 10px; padding: 0;">Αποστέλλονται{% if fulfillment.tracking_company %} μέσω {{ fulfillment.tracking_company }}{% endif %} με αριθμό εντοπισμού (tracking number) {{ fulfillment.tracking_number }}.</p>
+
+						<p style="text-align: center; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; margin: 0 0 10px; padding: 0;" align="center">
+							<a class="btn" href="{{ fulfillment.tracking_url }}" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; color: #FFF; text-decoration: none; width: 80%; font-weight: bold; text-align: center; cursor: pointer; display: inline-block; background: #666; margin: 0; padding: 15px 10%;">Προβολή κατάστασης »</a>
+						</p>
+
+						<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; margin: 0 0 10px; padding: 0;"><small style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;">Να σημειωθεί ότι μπορεί να περάσει ένα μικρό χρονικό διάστημα για να ενημερωθεί η κατάσταση της μεταφοράς..
+						<br style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;" />
+						σε περίπτωση που το κουμπί δε λειτουργεί, αντιγράψτε τον παρακάτω σύνδεσμο στον browser σας: {{ fulfillment.tracking_url }}
+						</small></p>
+
+					</td>
+				</tr></table></div>
+
+		</td>
+		<td style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;"></td>
+	</tr></table><!-- /BODY --><!-- FOOTER --><table class="footer-wrap" bgcolor="#b5181e" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; width: 100%; clear: both !important; margin: 0; padding: 0;"><tr style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;"><td style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;"></td>
+		<td class="container" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; display: block !important; max-width: 600px !important; clear: both !important; margin: 0 auto; padding: 0;">
+
+				<!-- content -->
+				<div class="content" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; max-width: 600px; display: block; margin: 0 auto; padding: 15px;">
+				<table style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; width: 100%; margin: 0; padding: 0;"><tr style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;"><td align="center" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;">
+						<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; margin: 0 0 10px; padding: 0;">Σας ευχαριστούμε για τις αγορές σας από το κατάστημα <a href="{{ shop.url }}" style="color: #111111; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;">{{ shop.name }}</a>!</p>
+						<a href="{{ shop.url }}" title="{{ shop_name }}" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; color: #2BA6CB; margin: 0; padding: 0;"><img src="{{ 'logo-new.svg' | asset_url }}" style="width: 40px; height: auto; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; max-width: 100%; margin: 0; padding: 0;" alt="{{ shop_name }}" /></a>
+						<br style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;" /><br style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;" /><p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; margin: 0 0 10px; padding: 0;"><strong style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;"><a href="{{ shop.email }}" style="color: #111111; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;">{{ shop.email }}</a></strong></p>
+						<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; margin: 0 0 10px; padding: 0;"><small style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;">© {{ shop.name }}</small></p>
+					</td>
+				</tr></table></div><!-- /content -->
+
+		</td>
+		<td style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; margin: 0; padding: 0;"></td>
+	</tr></table><!-- /FOOTER --></body>
+</html>
