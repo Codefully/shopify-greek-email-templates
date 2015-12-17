@@ -1,8 +1,19 @@
-Σας ευχαριστούμε για την παραγγελία σας στο κατάστημα {{ shop_name }}!
-Λαμβάνετε αυτό το email για να επιβεβαιωθεί η πρόσφατη παραγγελία σας.
-Ημερομηνία {{ date | date: "%m/%d/%Y" }}
+{{ shop_name }}
+Ευχαριστούμε για την παραγγελία!
+Αρ. Παραγγελίας: {{ order_number }}
+Ημερομηνία: {{ date | date: "%m/%d/%Y" }}
+{% for line in line_items %}
+- {{ line.quantity }} x {{ line.title }} {{ line.price | money }}
+{% endfor %}
+{% if discounts %}
+Έκπτωση: {{ discounts_savings | money_with_currency }}
+{% endif %}
+{% if requires_shipping %}
+Μεταφορικά: {{ shipping_price | money_with_currency }}
+{% endif %}
+Σύνολο: {{ total_price | money_with_currency }}
 {% if requires_shipping and shipping_address %}
-Διεύθυνση αποστολής
+Διεύθυνση Αποστολής
 {{ shipping_address.name }}
 {{ shipping_address.street }}
 {{ shipping_address.city }}
@@ -11,7 +22,7 @@
 {{ shipping_address.country }}
 {% endif %}
 {% if billing_address %}
-Διεύθυνση χρέωσης
+Διεύθυνση Τιμολόγησης
 {{ billing_address.name }}
 {{ billing_address.street }}
 {{ billing_address.city }}
@@ -19,14 +30,7 @@
 {{ billing_address.zip }}
 {{ billing_address.country }}
 {% endif %}
-{% for line in line_items %}
-{{ line.quantity }}x {{ line.title }} προς {{ line.price | money }} το καθένα
-{% endfor %}
-
-{% if discounts %}
-Εκπτώσεις : {{ discounts_savings | money_with_currency }} {% endif %}
-Μερικό σύνολο : {{ subtotal_price | money_with_currency }}
-{% for tax_line in tax_lines %} {{ tax_line.title }} : {{ tax_line.price | money_with_currency }}
-{% endfor %} {% if requires_shipping %}
-Μεταφορικά : {{ shipping_price | money_with_currency }}
-{% endif %} Σύνολο : {{ total_price | money_with_currency }}
+{% if order_status_url %}
+Παρακολούθηση παραγγελίας
+{{ order_status_url }}
+{% endif %}
