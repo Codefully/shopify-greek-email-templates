@@ -1,30 +1,41 @@
-<p>Σας ευχαριστούμε για την παραγγελία σας στο κατάστημα {{ shop_name }}!</p>
-<p>Λαμβάνετε αυτό το email για να επιβεβαιωθεί η πρόσφατη παραγγελία σας.</p>
-<p>Ημερομηνία {{ date | date: "%m/%d/%Y" }}</p>
+<p><strong>{{ shop_name }}</strong></p>
+<p>Ευχαριστούμε για την παραγγελία!</p>
+<p>
+  Αρ. Παραγγελίας: {{ order_number }}<br>
+  Ημερομηνία: {{ date | date: "%m/%d/%Y" }}
+</p>
+{% for line in line_items %}
+  - {{ line.quantity }} x {{ line.title }} {{ line.price | money }}<br>
+{% endfor %}
+{% if discounts %}
+  <p>Έκπτωση: {{ discounts_savings | money_with_currency }}</p>
+{% endif %}
+{% if requires_shipping %}
+  <p>Μεταφορικά: {{ shipping_price | money_with_currency }}</p>
+{% endif %}
+<p>Σύνολο: {{ total_price | money_with_currency }}</p>
 {% if requires_shipping and shipping_address %}
-<p><b>Διεύθυνση αποστολής</b><br />
-{{ shipping_address.name }}<br />
-{{ shipping_address.street }}<br />
-{{ shipping_address.city }}<br />
-{{ shipping_address.province }}
-{{ shipping_address.zip }}<br />
-{{ shipping_address.country }}</p>
+  <p>
+    <b>Διεύθυνση Αποστολής</b><br />
+    {{ shipping_address.name }}<br />
+    {{ shipping_address.street }}<br />
+    {{ shipping_address.city }}<br />
+    {{ shipping_address.province }}
+    {{ shipping_address.zip }}<br />
+    {{ shipping_address.country }}
+  </p>
 {% endif %}
 {% if billing_address %}
-<p><b>Διεύθυνση χρέωσης</b><br />
-{{ billing_address.name }}<br />
-{{ billing_address.street }}<br />
-{{ billing_address.city }}<br />
-{{ billing_address.province }}
-{{ billing_address.zip }}<br />
-{{ billing_address.country }}</p>
+  <p>
+    <b>Διεύθυνση Τιμολόγησης</b><br />
+    {{ billing_address.name }}<br />
+    {{ billing_address.street }}<br />
+    {{ billing_address.city }}<br />
+    {{ billing_address.province }}
+    {{ billing_address.zip }}<br />
+    {{ billing_address.country }}
+  </p>
 {% endif %}
-<ul style="list-style-type:none">  {% for line in line_items %} <li> <img src="{{ line | img_url: 'small' }}" /> {{ line.quantity }}x {{ line.title }} προς {{ line.price | money }} το καθένα </li> {% endfor %}
-</ul>
-{% if discounts %}
-<p>Εκπτώσεις : {{ discounts_savings | money_with_currency }}</p> {% endif %}
-<p>Μερικό σύνολο : {{ subtotal_price | money_with_currency }}</p>
-{% for tax_line in tax_lines %} <p>{{ tax_line.title }} : {{ tax_line.price | money_with_currency }} </p>
-{% endfor %} {% if requires_shipping %}
-<p>Μεταφορικά : {{ shipping_price | money_with_currency }}</p>
-{% endif %} <p>Σύνολο : {{ total_price | money_with_currency }}</p>
+{% if order_status_url %}
+  <p><a href='{{ order_status_url }}'>Παρακολούθηση παραγγελίας</a></p>
+{% endif %}
