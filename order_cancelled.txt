@@ -1,14 +1,10 @@
-{% if billing_address.name %}
-Αγαπητέ/ή {{ billing_address.name }},
-
+Η παραγγελία {{ name }} ακυρώθηκε {% case cancel_reason %}{% when 'customer' %}μετά από δικό σας αίτημα.{% when 'inventory' %}γιατί δεν υπάρχει αρκετό απόθεμα στο κατάστημά μας για να την καλύψουμε.{% when 'fraud' %}γιατί θεωρήθηκε ύποπτη από το σύστημα.{% when 'other' %}.{% endcase %}
+{% if financial_status == 'voided' %}
+Η πληρωμή σας έχει ακυρωθεί.
+{% elsif financial_status == 'credited' %}
+Η πληρωμή σας έχει επιστραφεί.
 {% endif %}
-
-Η παραγγελία σας {{ name }} έχει ακυρωθεί {% case cancel_reason %}{% when 'customer' %}μετά από δικό σας αίτημα.{% when 'inventory' %}γιατί δεν υπάρχουν αρκετά αποθέματα για να εκτελέσουμε την παραγγελία σας.{% when 'fraud' %}γιατί θεωρούμε ότι είναι ύποπτη για απάτη.{% when 'other' %}για απρόβλεπτους λόγους.{% endcase %}
-
-
-{% if financial_status == 'voided' %}Η πληρωμή σας έχει ακυρωθεί{% elsif financial_status == 'credited' %}Η πληρωμή σας έχει επιστραφεί.{% endif %}
-
-Απαντήστε σε αυτό το email εάν έχετε οποιεσδήποτε ερωτήσεις ή ανησυχίες.
+Αν έχετε οποιαδήποτε ερώτηση, παρακαλώ επικοινωνήστε μαζί μας.
 
 Με εκτίμηση,
- {{shop_name}}
+{{shop_name}}
