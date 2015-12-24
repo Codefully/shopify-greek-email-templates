@@ -3,3 +3,4 @@
 
 
 {{ shop_name }}
+{{ shop.url | replace: 'http://', '' }}
