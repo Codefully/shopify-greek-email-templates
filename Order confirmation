@@ -1,3 +1,58 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Plain text email --------------------------------------------------------->
+{{ shop_name }}
+Ευχαριστούμε για την παραγγελία!
+Αρ. Παραγγελίας: {{ order_number }}
+Ημερομηνία: {{ date | date: "%m/%d/%Y" }}
+{% for line in line_items %}
+- {{ line.quantity }} x {{ line.title }} {{ line.price | money }}
+{% endfor %}
+{% if discounts %}
+Έκπτωση: {{ discounts_savings | money_with_currency }}
+{% endif %}
+{% if requires_shipping %}
+Μεταφορικά: {{ shipping_price | money_with_currency }}
+{% endif %}
+Σύνολο: {{ total_price | money_with_currency }}
+{% if requires_shipping and shipping_address %}
+Διεύθυνση Αποστολής
+{{ shipping_address.name }}
+{{ shipping_address.street }}
+{{ shipping_address.city }}
+{{ shipping_address.province }}
+{{ shipping_address.zip }}
+{{ shipping_address.country }}
+{% endif %}
+{% if billing_address %}
+Διεύθυνση Τιμολόγησης
+{{ billing_address.name }}
+{{ billing_address.street }}
+{{ billing_address.city }}
+{{ billing_address.province }}
+{{ billing_address.zip }}
+{{ billing_address.country }}
+{% endif %}
+{% if order_status_url %}
+Παρακολούθηση παραγγελίας
+{{ order_status_url }}
+{% endif %}
+
+
+
+
+<!-- HTML email --------------------------------------------------------------->
 <p><strong>{{ shop_name }}</strong></p>
 <p>Ευχαριστούμε για την παραγγελία!</p>
 <p>

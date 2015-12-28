@@ -1,6 +1,0 @@
-{% if billing_address.name %}Αγαπητέ/ή {{ billing_address.name }},{% endif %}
-
-
-
-{{ shop_name }}
-{{ shop.url | replace: 'http://', '' }}

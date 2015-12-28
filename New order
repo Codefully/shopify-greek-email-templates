@@ -1,0 +1,83 @@
+
+
+<!-- Template ----------------------------------------------------------------->
+<!-- New order -->
+
+<!-- Description -------------------------------------------------------------->
+<!-- Sent to order notification subscribers when a customer places an order. -->
+
+<!-- Default template --------------------------------------------------------->
+<!-- https://docs.shopify.com/manual/settings/notifications/default-templates#new-order-notification -->
+
+
+<!-- Email subject ------------------------------------------------------------>
+{{ shop.url | replace: 'http://', '' }} - Παραγγελία {{name}}
+
+
+<!-- Plain text email --------------------------------------------------------->
+Αριθμός παραγγελίας: {{name}}
+
+Προϊόντα:
+{% for line in line_items %}- {{ line.quantity }} x {{line.title }}{% if line.sku%} (sku: {{ line.sku }}) προς {{ line.price | money_with_currency }} το καθένα{% endif %}
+{% endfor %}
+{% if customer.name %}Πελάτης: {{ customer.name }}{% endif %}
+Ημερομηνία: {{ date | date: "%-d/%m/%Y" }}
+Σύνολο παραγγελίας: {{ total_price | money_with_currency }}
+Μέθοδος πληρωμής: {{ gateway }}
+{% if requires_shipping and shipping_address %}Τρόπος αποστολής: {% for shipping_method in shipping_methods %}{{ shipping_method.title }} {% endfor %}
+
+Διεύθυνση αποστολής:
+{{ shipping_address.name }}
+{{ shipping_address.street }}
+{{ shipping_address.city }}, {{ shipping_address.province }} {{ shipping_address.zip }}
+{{ shipping_address.country }}
+{{ shipping_address.phone }}
+{% endif %}
+{% if fulfillment_aborted %}Η παραπάνω παραγγελία δεν εκτελέστηκε αυτόματα γιατί χαρακτηρίστηκε ως ύποπτη.
+{% endif %}
+{% if has_high_risks? %}Η παραγγελία είναι χαρακτηρισμένη από το αυτόματο σύστημα ασφαλείας ως ύποπτη.
+Συνιστάται η επικοινωνία με τον πελάτη για την επιβεβαίωση των στοιχείων του.{% endif %}
+
+
+<!-- HTML email --------------------------------------------------------------->
+<p>Αριθμός παραγγελίας: {{name}}</p>
+
+<p>
+  Προϊόντα:<br>
+  {% for line in line_items %}
+  - {{ line.quantity }} x {{line.title }}{% if line.sku%} (sku: {{ line.sku }}) προς {{ line.price | money_with_currency }} το καθένα{% endif %}<br>
+  {% endfor %}
+</p>
+
+<p>
+  {% if customer.name %}Πελάτης: {{ customer.name }}<br>{% endif %}
+  Ημερομηνία: {{ date | date: "%-d/%m/%Y" }}<br>
+  Σύνολο παραγγελίας: {{ total_price | money_with_currency }}<br>
+  Μέθοδος πληρωμής: {{ gateway }}<br>
+  {% if requires_shipping and shipping_address %}
+  Τρόπος αποστολής: {% for shipping_method in shipping_methods %}{{ shipping_method.title }} {% endfor %}<br><br>
+
+  Διεύθυνση αποστολής:<br>
+  {{ shipping_address.name }}<br>
+  {{ shipping_address.street }}<br>
+  {{ shipping_address.city }}, {{ shipping_address.province }} {{ shipping_address.zip }}<br>
+  {{ shipping_address.country }}<br>
+  {{ shipping_address.phone }}<br>
+{% endif %}
+</p>
+
+{% if fulfillment_aborted %}
+  <p>
+    <strong>
+      Η παραπάνω παραγγελία δεν εκτελέστηκε αυτόματα γιατί χαρακτηρίστηκε ως ύποπτη!
+    </strong>
+  </p>
+{% endif %}
+{% if has_high_risks? %}
+  <p>
+    <strong>
+      Η παραγγελία είναι χαρακτηρισμένη από το αυτόματο σύστημα ασφαλείας ως ύποπτη.
+      Συνιστάται η επικοινωνία με τον πελάτη για την επιβεβαίωση των στοιχείων του.
+    </strong>
+  </p>
+{% endif %}

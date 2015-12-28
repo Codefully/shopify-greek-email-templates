@@ -1,3 +1,46 @@
+
+
+
+
+
+
+
+
+
+<!-- Plain text email --------------------------------------------------------->
+{% if billing_address.name %}Αγαπητέ/ή {{ billing_address.name }},{% endif %}
+
+{% if fulfillment.item_count == item_count %}Όλα τα{% elsif fulfillment_status == 'fulfilled' %}Τα τελευταία{% else %}Κάποια από τα{% endif %} προϊόντα της παραγγελίας {{ name }} έχουν αποσταλεί:
+{% for line in fulfillment.fulfillment_line_items %}
+  {{ line.quantity }}x {{ line.line_item.title }}
+{% endfor %}
+{% if requires_shipping %}Μεταφέρονται {% if fulfillment.tracking_company %}μέσω {{ fulfillment.tracking_company }} {% endif %}στην εξής διεύθυνση:
+
+  {{ shipping_address.name }}
+  {{ shipping_address.address1 }}
+  {{ shipping_address.address2 }}
+  {{ shipping_address.city }}, {{ shipping_address.province }}  {{ shipping_address.zip }}
+  {{ shipping_address.country }}
+{% if fulfillment.tracking_numbers.size > 0 %}
+Τα στοιχεία μεταφοράς των προϊόντων σας είναι:
+{% for tracking_number in fulfillment.tracking_numbers %}
+  {{ tracking_number }}
+{% endfor %}
+Κάντε κλικ παρακάτω για να δείτε που βρίσκονται τα προϊόντα σας:
+{% for tracking_url in fulfillment.tracking_urls %}
+  {{ tracking_url }}
+{% endfor %}
+Να σημειωθεί ότι μπορεί να περάσει ένα μικρό χρονικό διάστημα για να ενημερωθεί η κατάσταση της μεταφοράς
+{% endif %}{% endif %}{% if fulfillment_status != 'fulfilled' %}
+Θα λάβετε email επιβεβαίωσης όταν σταλούν περισσότερα προϊόντα από τη παραγγελία σας.
+{% endif %}
+Σας ευχαριστούμε για την παραγγελία σας στο κατάστημα {{ shop_name }}!
+
+
+
+
+
+<!-- HTML email --------------------------------------------------------------->
 {% if billing_address.name %}
 <p>Αγαπητέ/ή {{ billing_address.name }},</p>
 <p></p>

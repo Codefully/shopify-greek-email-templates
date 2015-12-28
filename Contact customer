@@ -1,0 +1,24 @@
+
+
+<!-- Template ----------------------------------------------------------------->
+<!-- Contact customer -->
+
+<!-- Description -------------------------------------------------------------->
+<!-- Sent to the customer when you contact them from the orders page. -->
+<!-- You can edit this email before you send it. -->
+
+<!-- Default template --------------------------------------------------------->
+<!-- https://docs.shopify.com/manual/settings/notifications/default-templates#contact-buyer -->
+
+
+<!-- Email subject ------------------------------------------------------------>
+{{ shop.url | replace: 'http://', '' }} - Σχετικά με την παραγγελία σας!
+
+
+<!-- Plain text email --------------------------------------------------------->
+{% if billing_address.name %}Αγαπητέ/ή {{ billing_address.name }},{% endif %}
+
+
+
+{{ shop_name }}
+{{ shop.url | replace: 'http://', '' }}

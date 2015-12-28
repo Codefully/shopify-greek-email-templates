@@ -1,0 +1,18 @@
+
+
+<!-- Template ----------------------------------------------------------------->
+<!-- New order (mobile) -->
+
+<!-- Description -------------------------------------------------------------->
+<!-- Sent to mobile notification subscribers when a customer places an order. -->
+
+<!-- Default template --------------------------------------------------------->
+<!-- https://docs.shopify.com/manual/settings/notifications/default-templates#new-order-notification-mobile -->
+
+
+<!-- Email subject ------------------------------------------------------------>
+Παραγγελία {{name}}
+
+
+<!-- Email body --------------------------------------------------------------->
+{{ total_price | money_with_currency }}{% if customer.name %} {{ customer.name }}{% endif %}

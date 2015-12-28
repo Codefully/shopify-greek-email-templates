@@ -1,0 +1,42 @@
+
+
+<!-- Template ----------------------------------------------------------------->
+<!-- Draft order invoice -->
+
+<!-- Description -------------------------------------------------------------->
+<!-- Sent to the customer when a draft order invoice is created. -->
+<!-- You can edit this email invoice before you send it. -->
+
+<!-- Default template --------------------------------------------------------->
+<!-- https://docs.shopify.com/manual/settings/notifications/default-templates#draft-order-invoice -->
+
+
+<!-- Email subject ------------------------------------------------------------>
+{{ shop.url | replace: 'http://', '' }} - Παραγγελία {{name}}
+
+
+<!-- Plain text email --------------------------------------------------------->
+Παραγγελία {{ name }} από το κατάστημα {{ shop_name }}.
+
+Ημερομηνία: {{ date | date: "%-d/%m/%Y" }}
+
+Για την ολοκλήρωση της παραγγελίας, παρακαλώ αντιγράψτε την παρακάτω διεύθυνση στον browser σας:
+
+{{ invoice_url }}
+
+{% if reserve_inventory_until %}Τα προϊόντα της παραγγελίας έχουν δεσμευτεί και θα παραμείνουν διαθέσιμα εώς την {{ reserve_inventory_until | date: "%-d/%m/%Y" }}.{% endif %}
+
+Η παραγγελία περιλαμβάνει τα παρακάτω προϊόντα:
+
+{% for line in line_items %}{{ line.quantity }} x {{line.title }} προς {{ line.price | money_with_currency }} το καθένα
+{% endfor %}
+Μερικό σύνολο: {{ subtotal_price | money_with_currency  }}
+{% if discounts %}Έκπτωση: -{{ discounts_amount | money_with_currency }}{% endif %}
+{% if requires_shipping %}Μεταφορικά: {{ shipping_price | money_with_currency }}{% endif %}
+Κόστος παραγγελίας: {{ total_price | money_with_currency }}
+
+Ευχαριστούμε για την προτίμηση που δείχνετε στο κατάστημα μας.
+
+Με εκτίμηση,
+{{ shop.name }}
+{{ shop.url | replace: 'http://', '' }}
