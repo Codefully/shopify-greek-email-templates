@@ -15,7 +15,7 @@
 
 
 <!-- Plain text email --------------------------------------------------------->
-Αριθμός παραγγελίας: {{name}}
+Αρ. παραγγελίας: {{name}}
 
 Προϊόντα:
 {% for line in line_items %}- {{ line.quantity }} x {{line.title }}{% if line.sku%} (sku: {{ line.sku }}) προς {{ line.price | money_with_currency }} το καθένα{% endif %}

@@ -1,16 +1,21 @@
 
 
+<!-- Template ----------------------------------------------------------------->
+<!-- Order canceled -->
+
+<!-- Description -------------------------------------------------------------->
+<!-- Sent automatically to the customer if their order is canceled (if you select this option). -->
+
+<!-- Default template --------------------------------------------------------->
+<!-- https://docs.shopify.com/manual/settings/notifications/default-templates#order-cancelled -->
 
 
-
-
-
-
-
+<!-- Email subject ------------------------------------------------------------>
+{{ shop.url | replace: 'http://', '' }} - Ακύρωση παραγγελίας {{name}}
 
 
 <!-- Plain text email --------------------------------------------------------->
-Η παραγγελία {{ name }} ακυρώθηκε {% case cancel_reason %}{% when 'customer' %}μετά από δικό σας αίτημα.{% when 'inventory' %}γιατί δεν υπάρχει αρκετό απόθεμα στο κατάστημά μας για να την καλύψουμε.{% when 'fraud' %}γιατί θεωρήθηκε ύποπτη από το σύστημα.{% when 'other' %}.{% endcase %}
+Η παραγγελία {{ name }} ακυρώθηκε{% case cancel_reason %}{% when 'customer' %} μετά από δικό σας αίτημα.{% when 'inventory' %} γιατί δεν υπάρχει αρκετό απόθεμα στο κατάστημά μας για να την καλύψουμε.{% when 'fraud' %} γιατί θεωρήθηκε ύποπτη από το σύστημα.{% when 'other' %}.{% endcase %}
 {% if financial_status == 'voided' %}
 Η πληρωμή σας έχει ακυρωθεί.
 {% elsif financial_status == 'credited' %}
@@ -19,8 +24,8 @@
 Αν έχετε οποιαδήποτε ερώτηση, παρακαλώ επικοινωνήστε μαζί μας.
 
 Με εκτίμηση,
-{{shop_name}}
-
+{{ shop.name }}
+{{ shop.url | replace: 'http://', '' }}
 
 
 <!-- HTML email --------------------------------------------------------------->
@@ -39,4 +44,4 @@
   <p>Η πληρωμή σας έχει επιστραφεί.</p>
 {% endif %}
 <p>Αν έχετε οποιαδήποτε ερώτηση, παρακαλώ επικοινωνήστε μαζί μας.</p>
-<p>Με εκτίμηση,<br>{{shop_name}}</p>
+<p>Με εκτίμηση,<br><a href="{{ shop.url }}">{{ shop.name }}</a></p>

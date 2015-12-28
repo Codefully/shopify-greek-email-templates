@@ -1,33 +1,33 @@
 
 
+<!-- Template ----------------------------------------------------------------->
+<!-- Order canceled -->
+
+<!-- Description -------------------------------------------------------------->
+<!-- Sent to order notification subscribers when a customer places an order. -->
+
+<!-- Default template --------------------------------------------------------->
+<!-- https://docs.shopify.com/manual/settings/notifications/default-templates#new-order-notification -->
 
 
-
-
-
-
-
-
-
+<!-- Email subject ------------------------------------------------------------>
+{{ shop.url | replace: 'http://', '' }} - Παραγγελία {{name}}
 
 
 <!-- Plain text email --------------------------------------------------------->
 {{ shop_name }}
 Ευχαριστούμε για την παραγγελία!
+
 Αρ. Παραγγελίας: {{ order_number }}
 Ημερομηνία: {{ date | date: "%m/%d/%Y" }}
-{% for line in line_items %}
-- {{ line.quantity }} x {{ line.title }} {{ line.price | money }}
+
+{% for line in line_items %}- {{ line.quantity }} x {{ line.title }} {{ line.price | money }}
 {% endfor %}
-{% if discounts %}
-Έκπτωση: {{ discounts_savings | money_with_currency }}
-{% endif %}
-{% if requires_shipping %}
-Μεταφορικά: {{ shipping_price | money_with_currency }}
-{% endif %}
+{% if discounts %}Έκπτωση: {{ discounts_savings | money_with_currency }}{% endif %}
+{% if requires_shipping %}Μεταφορικά: {{ shipping_price | money_with_currency }}{% endif %}
 Σύνολο: {{ total_price | money_with_currency }}
-{% if requires_shipping and shipping_address %}
-Διεύθυνση Αποστολής
+
+{% if requires_shipping and shipping_address %}Διεύθυνση Αποστολής
 {{ shipping_address.name }}
 {{ shipping_address.street }}
 {{ shipping_address.city }}
@@ -35,8 +35,7 @@
 {{ shipping_address.zip }}
 {{ shipping_address.country }}
 {% endif %}
-{% if billing_address %}
-Διεύθυνση Τιμολόγησης
+{% if billing_address %}Διεύθυνση Τιμολόγησης
 {{ billing_address.name }}
 {{ billing_address.street }}
 {{ billing_address.city }}
@@ -44,12 +43,14 @@
 {{ billing_address.zip }}
 {{ billing_address.country }}
 {% endif %}
-{% if order_status_url %}
-Παρακολούθηση παραγγελίας
-{{ order_status_url }}
-{% endif %}
+{% if order_status_url %}Για να παρακολούθησετε την εξέλιξη της παραγγελίας σας, αντιγράψτε την παρακάτω διεύθυνση στον browser σας:
+{{ order_status_url }}{% endif %}
 
+Ευχαριστούμε για την προτίμηση που δείχνετε στο κατάστημα μας.
 
+Με εκτίμηση,
+{{ shop.name }}
+{{ shop.url | replace: 'http://', '' }}
 
 
 <!-- HTML email --------------------------------------------------------------->
@@ -62,13 +63,15 @@
 {% for line in line_items %}
   - {{ line.quantity }} x {{ line.title }} {{ line.price | money }}<br>
 {% endfor %}
-{% if discounts %}
-  <p>Έκπτωση: {{ discounts_savings | money_with_currency }}</p>
-{% endif %}
-{% if requires_shipping %}
-  <p>Μεταφορικά: {{ shipping_price | money_with_currency }}</p>
-{% endif %}
-<p>Σύνολο: {{ total_price | money_with_currency }}</p>
+<p>
+  {% if discounts %}
+    Έκπτωση: {{ discounts_savings | money_with_currency }}<br>
+  {% endif %}
+  {% if requires_shipping %}
+    Μεταφορικά: {{ shipping_price | money_with_currency }}<br>
+  {% endif %}
+  Σύνολο: {{ total_price | money_with_currency }}
+</p>
 {% if requires_shipping and shipping_address %}
   <p>
     <b>Διεύθυνση Αποστολής</b><br />
@@ -92,5 +95,11 @@
   </p>
 {% endif %}
 {% if order_status_url %}
+  <p>Για να παρακολούθησετε την εξέλιξη της παραγγελίας σας, ακολουθήστε τον παρακάτω σύνδεσμο:</p>
   <p><a href='{{ order_status_url }}'>Παρακολούθηση παραγγελίας</a></p>
+  <p>Σε περίπτωση που ο σύνδεσμος δε λειτουργεί, αντιγράψτε την παρακάτω διεύθυνση στον browser σας:</p>
+  <p>{{ order_status_url }}</p>
 {% endif %}
+
+<p>Ευχαριστούμε για την προτίμηση που δείχνετε στο κατάστημα μας.</p>
+<p>Με εκτίμηση,<br><a href="{{ shop.url }}">{{ shop.name }}</a></p>
