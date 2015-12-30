@@ -15,35 +15,34 @@
 
 
 <!-- Plain text email --------------------------------------------------------->
-{{ shop_name }}
 Ευχαριστούμε για την παραγγελία!
 
 Αρ. Παραγγελίας: {{ order_number }}
 Ημερομηνία: {{ date | date: "%m/%d/%Y" }}
-
-{% for line in line_items %}- {{ line.quantity }} x {{ line.title }} {{ line.price | money }}
-{% endfor %}
-{% if discounts %}Έκπτωση: {{ discounts_savings | money_with_currency }}{% endif %}
-{% if requires_shipping %}Μεταφορικά: {{ shipping_price | money_with_currency }}{% endif %}
+Μεταφορικά: {% if requires_shipping %}{{ shipping_price | money_with_currency }}{% else %}0{% endif %}
 Σύνολο: {{ total_price | money_with_currency }}
 
-{% if requires_shipping and shipping_address %}Διεύθυνση Αποστολής
-{{ shipping_address.name }}
-{{ shipping_address.street }}
-{{ shipping_address.city }}
-{{ shipping_address.province }}
-{{ shipping_address.zip }}
-{{ shipping_address.country }}
+Προϊόντα: {% for line in line_items %}
+  {{ line.quantity }} x {{ line.title }} {{ line.price | money }}{% endfor %}
+
+{% if requires_shipping and shipping_address %}Διεύθυνση Αποστολής:
+  {{ shipping_address.name }}
+  {{ shipping_address.street }}
+  {{ shipping_address.city }}
+  {{ shipping_address.province }}
+  {{ shipping_address.zip }}
+  {{ shipping_address.country }}
 {% endif %}
-{% if billing_address %}Διεύθυνση Τιμολόγησης
-{{ billing_address.name }}
-{{ billing_address.street }}
-{{ billing_address.city }}
-{{ billing_address.province }}
-{{ billing_address.zip }}
-{{ billing_address.country }}
+{% if billing_address %}Διεύθυνση Τιμολόγησης:
+  {{ billing_address.name }}
+  {{ billing_address.street }}
+  {{ billing_address.city }}
+  {{ billing_address.province }}
+  {{ billing_address.zip }}
+  {{ billing_address.country }}
 {% endif %}
 {% if order_status_url %}Για να παρακολούθησετε την εξέλιξη της παραγγελίας σας, αντιγράψτε την παρακάτω διεύθυνση στον browser σας:
+
 {{ order_status_url }}{% endif %}
 
 Ευχαριστούμε για την προτίμηση που δείχνετε στο κατάστημα μας.
@@ -54,43 +53,39 @@
 
 
 <!-- HTML email --------------------------------------------------------------->
-<p><strong>{{ shop_name }}</strong></p>
 <p>Ευχαριστούμε για την παραγγελία!</p>
 <p>
   Αρ. Παραγγελίας: {{ order_number }}<br>
-  Ημερομηνία: {{ date | date: "%m/%d/%Y" }}
-</p>
-{% for line in line_items %}
-  - {{ line.quantity }} x {{ line.title }} {{ line.price | money }}<br>
-{% endfor %}
-<p>
-  {% if discounts %}
-    Έκπτωση: {{ discounts_savings | money_with_currency }}<br>
-  {% endif %}
-  {% if requires_shipping %}
-    Μεταφορικά: {{ shipping_price | money_with_currency }}<br>
-  {% endif %}
+  Ημερομηνία: {{ date | date: "%m/%d/%Y" }}<br>
+  {% if discounts %}Έκπτωση: {{ discounts_savings | money_with_currency }}<br>{% endif %}
+  {% if requires_shipping %}Μεταφορικά: {{ shipping_price | money_with_currency }}<br>{% endif %}
   Σύνολο: {{ total_price | money_with_currency }}
+</p>
+<p>
+  <b>Προϊόντα</b><br>
+  {% for line in line_items %}
+    {{ line.quantity }} x {{ line.title }} {{ line.price | money }}<br>
+  {% endfor %}
 </p>
 {% if requires_shipping and shipping_address %}
   <p>
-    <b>Διεύθυνση Αποστολής</b><br />
-    {{ shipping_address.name }}<br />
-    {{ shipping_address.street }}<br />
-    {{ shipping_address.city }}<br />
+    <b>Διεύθυνση Αποστολής</b><br>
+    {{ shipping_address.name }}<br>
+    {{ shipping_address.street }}<br>
+    {{ shipping_address.city }}<br>
     {{ shipping_address.province }}
-    {{ shipping_address.zip }}<br />
+    {{ shipping_address.zip }}<br>
     {{ shipping_address.country }}
   </p>
 {% endif %}
 {% if billing_address %}
   <p>
-    <b>Διεύθυνση Τιμολόγησης</b><br />
-    {{ billing_address.name }}<br />
-    {{ billing_address.street }}<br />
-    {{ billing_address.city }}<br />
+    <b>Διεύθυνση Τιμολόγησης</b><br>
+    {{ billing_address.name }}<br>
+    {{ billing_address.street }}<br>
+    {{ billing_address.city }}<br>
     {{ billing_address.province }}
-    {{ billing_address.zip }}<br />
+    {{ billing_address.zip }}<br>
     {{ billing_address.country }}
   </p>
 {% endif %}
@@ -100,6 +95,5 @@
   <p>Σε περίπτωση που ο σύνδεσμος δε λειτουργεί, αντιγράψτε την παρακάτω διεύθυνση στον browser σας:</p>
   <p>{{ order_status_url }}</p>
 {% endif %}
-
 <p>Ευχαριστούμε για την προτίμηση που δείχνετε στο κατάστημα μας.</p>
 <p>Με εκτίμηση,<br><a href="{{ shop.url }}">{{ shop.name }}</a></p>

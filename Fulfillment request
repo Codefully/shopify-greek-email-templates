@@ -11,15 +11,15 @@
 
 
 <!-- Email subject ------------------------------------------------------------>
-Εκτέλεση παραγγελίας για το κατάστημα: {{ shop_name }}
+Εκτέλεση παραγγελίας για το κατάστημα {{ shop_name }}
 
 
 <!-- Plain text email --------------------------------------------------------->
-{{ service_name }},
+Προς {{ service_name }},
 
-Παρακαλώ εκτελέστε την παραγγελία {{ name }}.
+Παρακαλώ εκτελέστε την παραγγελία {{ name }}
 Συνολικός αριθμός προϊόντων: {{ fulfillment.item_count }}
-αριθμός διαφορετικών προϊόντων: {{ fulfillment.fulfillment_line_items.size }}
+Αριθμός διαφορετικών προϊόντων: {{ fulfillment.fulfillment_line_items.size }}
 
 Προϊόντα:
 {% for line in fulfillment.fulfillment_line_items %}
@@ -29,68 +29,56 @@
   Γραμμάρια: {{ line.line_item.grams }}
   Πωλητής: {{ line.line_item.vendor }}
 {% endfor %}
-{% if shipping_address %}
-
-Διεύθυνση Αποστολής:
-{{ shipping_address.name }}{% if shipping_address.company %}
-  {{ shipping_address.company }}{% endif %}
-{{ shipping_address.address1 }}
-{{ shipping_address.address2 }}
+{% if shipping_address %}Διεύθυνση Αποστολής:
+{{ shipping_address.name }}
+{% if shipping_address.company %}{{ shipping_address.company }}{% else %}Δεν υπάρχει διαθέσιμο όνομα εταιρείας{% endif %}
+{{ shipping_address.address1 }}{% if shipping_address.address2 %}, {{ shipping_address.address2 }}{% endif %}
 {{ shipping_address.city }}, {{ shipping_address.province }}
 {{ shipping_address.zip }}
 {{ shipping_address.country }}
 {% if shipping_address.phone %}Τηλέφωνο: {{ shipping_address.phone }}{% endif %}
 {% endif %}
-
-Τρόπος Αποστολής:
-{% if shipping_method %}{{ shipping_method.title }}{% else %}Κανένας{% endif %}
-
-Αριθμός μεταφοράς:
-{% if fulfillment.tracking_number %}{{ fulfillment.tracking_number }}{% else %}Κανένας{% endif %}
-
-Email πελάτη:
-{{ email }}
+Τρόπος Αποστολής: {% if shipping_method %}{{ shipping_method.title }}{% else %}Κανένας{% endif %}
+Αριθμός φορτωτικής: {% if fulfillment.tracking_number %}{{ fulfillment.tracking_number }}{% endif %}
+Email πελάτη: {{ email }}
 
 Σας ευχαριστώ,
 {{ shop_name }}
 
 
 <!-- HTML email --------------------------------------------------------------->
-<p>{{ service_name }},</p>
-<br>
-<p>Παρακαλώ εκτελέστε την παραγγελία {{ name }}.</p>
-<p>Συνολικός αριθμός προϊόντων: {{ fulfillment.item_count }}</p>
-<p>αριθμός διαφορετικών προϊόντων: {{ fulfillment.fulfillment_line_items.size }}</p>
-<br>
+<p>Προς {{ service_name }},</p>
+<p>
+  Παρακαλώ εκτελέστε την παραγγελία {{ name }}<br>
+  Συνολικός αριθμός προϊόντων: {{ fulfillment.item_count }}<br>
+  Αριθμός διαφορετικών προϊόντων: {{ fulfillment.fulfillment_line_items.size }}
+</p>
 <p><strong>Προϊόντα:</strong></p>
 {% for line in fulfillment.fulfillment_line_items %}
-  <p>Τίτλος: {{ line.line_item.title }}</p>
-  <p>SKU: {{ line.line_item.sku }}</p>
-  <p>Ποσότητα: {{ line.quantity }}</p>
-  <p>Γραμμάρια: {{ line.line_item.grams }}</p>
-  <p>Πωλητής: {{ line.line_item.vendor }}</p>
+  <p>
+    Τίτλος: {{ line.line_item.title }}<br>
+    SKU: {{ line.line_item.sku }}<br>
+    Ποσότητα: {{ line.quantity }}<br>
+    Γραμμάρια: {{ line.line_item.grams }}<br>
+    Πωλητής: {{ line.line_item.vendor }}
+  </p>
 {% endfor %}
 {% if shipping_address %}
-<br>
-<p><strong>Διεύθυνση Αποστολής:</strong></p>
-<p>{{ shipping_address.name }}{% if shipping_address.company %}
-  {{ shipping_address.company }}{% endif %}</p>
-<p>{{ shipping_address.address1 }}</p>
-<p>{{ shipping_address.address2 }}</p>
-<p>{{ shipping_address.city }}, {{ shipping_address.province }}</p>
-<p>{{ shipping_address.zip }}</p>
-<p>{{ shipping_address.country }}</p>
-{% if shipping_address.phone %}<p>Τηλέφωνο: {{ shipping_address.phone }}</p>{% endif %}
+  <p><strong>Διεύθυνση Αποστολής:</strong></p>
+  <p>
+    {{ shipping_address.name }}<br>
+    {% if shipping_address.company %}{{ shipping_address.company }}<br>{% endif %}
+    {{ shipping_address.address1 }}<br>
+    {% if shipping_address.address2 %}{{ shipping_address.address2 }}<br>{% endif %}
+    {{ shipping_address.city }}, {{ shipping_address.province }}<br>
+    {{ shipping_address.zip }}<br>
+    {{ shipping_address.country }}
+    {% if shipping_address.phone %}<br>Τηλέφωνο: {{ shipping_address.phone }}{% endif %}
+  </p>
 {% endif %}
-<br>
-<p><strong>Τρόπος Αποστολής:</strong></p>
-<p>{% if shipping_method %}{{ shipping_method.title }}{% else %}Κανένας{% endif %}</p>
-<br>
-<p><strong>Αριθμός μεταφοράς:</strong></p>
-<p>{% if fulfillment.tracking_number %}{{ fulfillment.tracking_number }}{% else %}Κανένας{% endif %}</p>
-<br>
-<p><strong>Email πελάτη:</strong></p>
-<p>{{ email }}</p>
-<br>
-<p>Σας ευχαριστώ,</p>
-<p>{{ shop_name }}</p>
+<p>
+  <strong>Τρόπος Αποστολής:</strong> {% if shipping_method %}{{ shipping_method.title }}{% endif %}<br>
+  <strong>Αριθμός μεταφοράς:</strong> {% if fulfillment.tracking_number %}{{ fulfillment.tracking_number }}{% endif %}<br>
+  <strong>Email πελάτη:</strong> {{ email }}
+</p>
+<p>Σας ευχαριστώ,<br>{{ shop_name }}</p>

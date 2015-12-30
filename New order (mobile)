@@ -15,4 +15,4 @@
 
 
 <!-- Email body --------------------------------------------------------------->
-{{ total_price | money_with_currency }}{% if customer.name %} {{ customer.name }}{% endif %}
+{{ total_price | money_with_currency }}{% if customer.name %} από {{ customer.name }}{% endif %}
