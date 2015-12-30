@@ -1,46 +1,44 @@
 
 
+<!-- Template ----------------------------------------------------------------->
+<!-- Gift card created -->
+
+<!-- Description -------------------------------------------------------------->
+<!-- Sent to the customer when a gift card is created. -->
+
+<!-- Default template --------------------------------------------------------->
+<!-- https://docs.shopify.com/manual/settings/notifications/default-templates#gift-card-plain -->
 
 
-
-
-
-
+<!-- Email subject ------------------------------------------------------------>
+{{ shop.url | replace: 'http://', '' }} - Ενημέρωση σχετικά με την δωροκάρτα σας
 
 
 <!-- Plain text email --------------------------------------------------------->
-Γεια σου{% if gift_card.customer %} {{ gift_card.customer.first_name }}{% endif %},
+Ενημέρωση σχετικά με την δωροκάρτα {{ gift_card.initial_value | money_without_trailing_zeros }} για αγορές από το κατάστημα {{ shop.name }}.
 
-Εδώ θα βρεις μια δωροεπιταγή για σένα με {{ gift_card.initial_value | money_without_trailing_zeros }} για να ψωνίσεις από το {{ shop.name }}.
+Το διαθέσιμο ποσό στη δωροκάρτα σας είναι {{ gift_card.balance | money_without_trailing_zeros }}.
 
-{% if gift_card.initial_value != gift_card.balance %}
-Έχεις ακόμα {{ gift_card.balance | money_without_trailing_zeros }} στη δωροεπιταγή σου.
-{% endif %}
+Για να δείτε ή να εκτυπώσετε την δωροκάρτα σας, αντιγράψτε την παρακάτω διεύθυνση στον browser σας:
 
-Για να δείς ή να εκτυπώσεις την κάρτα, επισκέψου τον παρακάτω σύνδεσμο:
-<{{ gift_card.url }}>
+{{ gift_card.url }}
 
-Αγόρασες τη δωροεπιταγή για κάποιον άλλο; Προώθησέ του αυτό το email.
+Αν αγόρασατε τη δωροκάρτα για κάποιον άλλο απλά προώθηστε του αυτό το email.
 
-Σας ευχαριστούμε που ψωνίζετε από το κατάστημα {{ shop.name }}!
-<{{ shop.url }}>
+Ευχαριστούμε για την προτίμηση που δείχνετε στο κατάστημα μας.
 
-
+Με εκτίμηση,
+{{ shop.name }}
+{{ shop.url | replace: 'http://', '' }}
 
 
 <!-- HTML email --------------------------------------------------------------->
-<div style="font-family:Sans-Serif;font-size:12px;width:100%;margin:5px;">
-  <p>Γεια σου{% if gift_card.customer %} {{ gift_card.customer.first_name }}{% endif %},</p>
-
-  <p>Εδώ θα βρεις μια δωροεπιταγή για σένα με {{ gift_card.initial_value | money_without_trailing_zeros }} για να ψωνίσεις από το <a href="{{ shop.url }}">{{ shop.name }}</a>.</p>
-
-  {% if gift_card.initial_value != gift_card.balance %}
-  <p>Έχεις ακόμα {{ gift_card.balance | money_without_trailing_zeros }} στη δωροεπιταγή σου.</p>
-  {% endif %}
-
-  <p><a href="{{ gift_card.url }}">Για να δεις ή να εκτυπώσεις τη δωροεπιταγή πάτα εδώ</a></p>
-
-  <p>Αγόρασες τη δωροεπιταγή για κάποιον άλλο; Προώθησέ του αυτό το email.</p>
-
-  <p>Σας ευχαριστούμε που ψωνίζετε από το κατάστημα <a href="{{ shop.url }}">{{ shop.name }}</a>!</p>
-</div>
+<p>Ενημέρωση σχετικά με την δωροκάρτα {{ gift_card.initial_value | money_without_trailing_zeros }} για αγορές από το κατάστημα {{ shop.name }}.</p>
+<p>Το διαθέσιμο ποσό στη δωροκάρτα σας είναι {{ gift_card.balance | money_without_trailing_zeros }}.</p>
+<p>Για να δείτε ή να εκτυπώσετε την δωροκάρτα σας, ακολουθήστε τον παρακάτω σύνδεσμο:</p>
+<p><a href="{{ gift_card.url }}">Άνοιγμα της δωροκάρτας</a></p>
+<p>Σε περίπτωση που ο σύνδεσμος δε λειτουργεί, αντιγράψτε την παρακάτω διεύθυνση στον browser σας:</p>
+<p>{{ gift_card.url }}</p>
+<p>Αν αγόρασατε τη δωροκάρτα για κάποιον άλλο απλά προώθηστε του αυτό το email.</p>
+<p>Ευχαριστούμε για την προτίμηση που δείχνετε στο κατάστημα μας.</p>
+<p>Με εκτίμηση,<br><a href="{{ shop.url }}">{{ shop.name }}</a></p>
