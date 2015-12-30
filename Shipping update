@@ -1,44 +1,51 @@
 
 
+<!-- Template ----------------------------------------------------------------->
+<!-- Shipping update -->
+
+<!-- Description -------------------------------------------------------------->
+<!-- Sent automatically to the customer if their fulfilled order’s tracking number is updated (if you select this option). -->
+
+<!-- Default template --------------------------------------------------------->
+<!-- https://docs.shopify.com/manual/settings/notifications/default-templates#shipping-update -->
 
 
-
-
-
-
+<!-- Email subject ------------------------------------------------------------>
+{{ shop.url | replace: 'http://', '' }} - Ενημέρωση στοιχείων αποστολής για την παραγγελία {{ name }}
 
 
 <!-- Plain text email --------------------------------------------------------->
-{% if billing_address.name %}Αγαπητέ/ή {{ billing_address.name }},{% endif %}
-
-Τα παρακάτω προϊόντα απο την παραγγελία {{ name }} έχουν ενημερωθεί με νέα στοιχεία αποστολής:
+Τα παρακάτω προϊόντα από την παραγγελία {{ name }} έχουν ενημερωθεί με νέα στοιχεία αποστολής:
 {% for line in fulfillment.fulfillment_line_items %}
-  {{ line.quantity }}x {{ line.line_item.title }}
-{% endfor %}
-Μεταφέρονται{% if fulfillment.tracking_company %} μέσω {{ fulfillment.tracking_company }}{% endif %} με αριθμό μεταφοράς {{ fulfillment.tracking_number }}. Κάνοντας κλικ στον παρακάτω σύνδεσμο μπορείτε να δείτε την κατάσταση μεταφοράς:
+  {{ line.quantity }}x {{ line.line_item.title }}{% endfor %}
+
+Μεταφέρονται{% if fulfillment.tracking_company %} μέσω {{ fulfillment.tracking_company }}{% endif %} με αριθμό φορτωτικής {{ fulfillment.tracking_number }}.
+
+Αντιγράψτε την παρακάτω διεύθυνση στον browser σας για να δείτε που βρίσκονται τα προϊόντα σας:
 
 {{ fulfillment.tracking_url }}
 
 Να σημειωθεί ότι μπορεί να περάσει ένα μικρό χρονικό διάστημα για να ενημερωθεί η κατάσταση της μεταφοράς.
 
+Ευχαριστούμε για την προτίμηση που δείχνετε στο κατάστημα μας.
 
-
+Με εκτίμηση,
+{{ shop.name }}
+{{ shop.url | replace: 'http://', '' }}
 
 
 <!-- HTML email --------------------------------------------------------------->
-{% if billing_address.name %}
-<p>Αγαπητέ/ή {{ billing_address.name }},</p>
-{% endif %}
-
 <p>Τα παρακάτω προϊόντα απο την παραγγελία {{ name }} έχουν ενημερωθεί με νέα στοιχεία αποστολής:</p>
-
-<ul style="list-style-type:none">
-  {% for line in fulfillment.fulfillment_line_items %}<li>
-    <img src="{{ line.line_item | img_url: 'small' }}" />
-    {{ line.quantity }}x {{ line.line_item.title }}
-  </li>{% endfor %}
-</ul>
-
-<p>Μεταφέρονται{% if fulfillment.tracking_company %} μέσω {{ fulfillment.tracking_company }}{% endif %} με αριθμό μεταφοράς {{ fulfillment.tracking_number }}. <a href="{{ fulfillment.tracking_url }}">Κάντε κλικ εδώ για να δείτε την κατάσταση της μεταφοράς</a>.</p>
-
+<p>
+  {% for line in fulfillment.fulfillment_line_items %}
+    {{ line.quantity }}x {{ line.line_item.title }}<br>
+  {% endfor %}
+</p>
+<p>
+  Μεταφέρονται{% if fulfillment.tracking_company %} μέσω {{ fulfillment.tracking_company }}{% endif %}
+  με αριθμό φορτωτικής {{ fulfillment.tracking_number }}.
+</p>
+<p><a href="{{ fulfillment.tracking_url }}">Κάντε κλικ εδώ για να δείτε που βρίσκονται τα προϊόντα σας</a></p>
 <p>Να σημειωθεί ότι μπορεί να περάσει ένα μικρό χρονικό διάστημα για να ενημερωθεί η κατάσταση της μεταφοράς.</p>
+<p>Ευχαριστούμε για την προτίμηση που δείχνετε στο κατάστημα μας.</p>
+<p>Με εκτίμηση,<br><a href="{{ shop.url }}">{{ shop.name }}</a></p>
