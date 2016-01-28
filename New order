@@ -21,6 +21,8 @@
 {% for line in line_items %}
   {{ line.quantity }} x {{line.title }}{% if line.sku%} (sku: {{ line.sku }}) προς {{ line.price | money_with_currency }} το καθένα{% endif %}{% endfor %}
 
+{% if note %}Σημείωση από τον πελάτη: {{ note }}{% endif %}
+
 {% if customer.name %}Πελάτης: {{ customer.name }}{% endif %}
 Ημερομηνία: {{ date | date: "%-d/%m/%Y" }}
 Σύνολο παραγγελίας: {{ total_price | money_with_currency }}
@@ -48,6 +50,9 @@
     {{ line.quantity }} x {{line.title }}{% if line.sku%} (sku: {{ line.sku }}) προς {{ line.price | money_with_currency }} το καθένα{% endif %}<br>
   {% endfor %}
 </p>
+{% if note %}
+  <p><b>Σημείωση από τον πελάτη:</b> {{ note }}</p>
+{% endif %}
 <p>
   {% if customer.name %}Πελάτης: {{ customer.name }}<br>{% endif %}
   Ημερομηνία: {{ date | date: "%-d/%m/%Y" }}<br>
